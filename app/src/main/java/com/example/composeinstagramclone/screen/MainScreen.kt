@@ -1,7 +1,9 @@
 package com.example.composeinstagramclone.screen
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
@@ -17,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
@@ -46,7 +49,9 @@ fun MainScreen() {
                                 restoreState = true
                             }
                         },
-                        icon = { Icon(screen.icon, contentDescription = screen.route) },
+                        icon = { Icon(screen.icon, contentDescription = screen.route, tint = Color.Black, modifier = Modifier.size(30.dp)) },
+                        modifier = Modifier
+                            .background(Color.White)
                     )
                 }
             }
