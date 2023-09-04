@@ -1,5 +1,6 @@
 package com.example.composeinstagramclone.screen
 
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
@@ -19,6 +20,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -32,11 +34,19 @@ import com.example.composeinstagramclone.R
 fun MainScreen() {
     val navController = rememberNavController()
 
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+    var isBottomBarVisible = true
+    currentDestination?.route?.let { it ->
+        isBottomBarVisible = when(it) {
+            "add" -> false
+            else -> true
+        }
+    }
+
     Scaffold(
         bottomBar = {
-            BottomNavigation {
-                val navBackStackEntry by navController.currentBackStackEntryAsState()
-                val currentDestination = navBackStackEntry?.destination
+            if(isBottomBarVisible) BottomNavigation {
                 fragments.forEach { screen ->
                     BottomNavigationItem(
                         selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
@@ -57,12 +67,15 @@ fun MainScreen() {
             }
         }
     ) { innerPadding ->
-        NavHost(navController = navController, startDestination = Screen.Home.route, Modifier.padding(innerPadding)) {
+        // TODO startDestination 수정하기
+        NavHost(navController = navController, startDestination = "searchDetail", Modifier.padding(innerPadding)) {
             composable(Screen.Home.route) { HomeScreen() }
-            composable(Screen.Search.route) { SearchScreen() }
+            composable(Screen.Search.route) { SearchScreen(navController) }
             composable(Screen.Add.route) { AddScreen() }
             composable(Screen.Reels.route) { ReelsScreen() }
             composable(Screen.Profile.route) { ProfileScreen() }
+
+            composable("searchDetail") { SearchDetailScreen() }
         }
     }
 }
