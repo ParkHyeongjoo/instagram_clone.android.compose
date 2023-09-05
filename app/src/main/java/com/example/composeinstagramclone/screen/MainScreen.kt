@@ -68,14 +68,14 @@ fun MainScreen() {
         }
     ) { innerPadding ->
         // TODO startDestination 수정하기
-        NavHost(navController = navController, startDestination = "searchDetail", Modifier.padding(innerPadding)) {
+        NavHost(navController = navController, startDestination = Screen.Profile.route, Modifier.padding(innerPadding)) {
             composable(Screen.Home.route) { HomeScreen() }
             composable(Screen.Search.route) { SearchScreen(navController) }
             composable(Screen.Add.route) { AddScreen() }
             composable(Screen.Reels.route) { ReelsScreen() }
             composable(Screen.Profile.route) { ProfileScreen() }
 
-            composable("searchDetail") { SearchDetailScreen() }
+            composable("searchDetail") { SearchDetailScreen(navController) }
         }
     }
 }

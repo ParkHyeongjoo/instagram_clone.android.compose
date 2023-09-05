@@ -3,6 +3,8 @@ package com.example.composeinstagramclone.screen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Search
@@ -13,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -34,8 +37,13 @@ fun SearchScreen(navController: NavController) {
                 scrollBehavior = scrollBehavior,
             )
         }
-    ) { innerPading ->
-
+    ) { innerPadding ->
+        Box(
+            modifier = Modifier
+                .padding(innerPadding)
+        ) {
+            GridContent()
+        }
     }
 }
 
@@ -73,6 +81,33 @@ private fun SearchBox(
                 fontWeight = FontWeight.Bold,
                 fontSize = 14.sp
             )
+        }
+    }
+}
+
+@Composable
+private fun GridContent() {
+    val list = (1..10).map { it.toString() }
+
+    LazyVerticalGrid(
+        columns = GridCells.Adaptive(minSize = 128.dp),
+    ) {
+        items(list.size) { index ->
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                colors = CardDefaults.cardColors(
+                    containerColor = Color.Red
+                )
+            ) {
+                Text(
+                    text =  list[index],
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 30.sp,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
         }
     }
 }
