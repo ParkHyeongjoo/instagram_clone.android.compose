@@ -1,4 +1,4 @@
-package com.example.composeinstagramclone.data.model
+package com.example.composeinstagramclone.model
 
 data class Book(val title: String, val author: String, val pageCount: Int)
 val DEFAULT_BOOKS = listOf(

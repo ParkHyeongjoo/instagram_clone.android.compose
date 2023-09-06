@@ -1,4 +1,4 @@
-package com.example.composeinstagramclone.screen
+package com.example.composeinstagramclone.ui.reelses
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

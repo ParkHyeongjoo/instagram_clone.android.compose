@@ -1,6 +1,10 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+
+    // Dagger - Hilt
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -48,11 +52,14 @@ android {
 
 dependencies {
 
-    def nav_version = "2.5.3"
+    // Navigation
+    def nav_version = "2.7.1"
     implementation("androidx.navigation:navigation-compose:$nav_version")
+
     implementation("androidx.compose.material:material:1.5.0")
     implementation "androidx.compose.material:material-icons-extended:1.5.0"
 
+    // JetPack Compose
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
     implementation 'androidx.activity:activity-compose:1.7.2'
@@ -66,4 +73,21 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
 
+    // Coroutine
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
+
+    // Dagger - Hilt
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+    kapt "androidx.hilt:hilt-compiler:$hilt_compiler_version"
+    implementation "androidx.hilt:hilt-navigation-compose:$hilt_compiler_version"
+
+    // TabLayout - ViewPager
+    implementation "com.google.accompanist:accompanist-pager:0.28.0"
+    implementation "com.google.accompanist:accompanist-pager-indicators:0.28.0"
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
 }

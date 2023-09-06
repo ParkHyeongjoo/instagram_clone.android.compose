@@ -1,26 +1,19 @@
-package com.example.composeinstagramclone.screen
+package com.example.composeinstagramclone.ui.main
 
-import android.widget.Toast
-import androidx.annotation.StringRes
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Movie
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.outlined.AddBox
-import androidx.compose.material3.Scaffold
+import androidx.compose.material.Scaffold
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -28,7 +21,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.composeinstagramclone.R
+import com.example.composeinstagramclone.ui.adds.AddScreen
+import com.example.composeinstagramclone.ui.homes.HomeScreen
+import com.example.composeinstagramclone.ui.profiles.ProfileScreen
+import com.example.composeinstagramclone.ui.reelses.ReelsScreen
+import com.example.composeinstagramclone.ui.searches.SearchDetailScreen
+import com.example.composeinstagramclone.ui.searches.SearchScreen
+import com.example.composeinstagramclone.utils.navigation.BottomNavi
 
 @Composable
 fun MainScreen() {
@@ -59,7 +58,7 @@ fun MainScreen() {
                                 restoreState = true
                             }
                         },
-                        icon = { Icon(screen.icon, contentDescription = screen.route, tint = Color.Black, modifier = Modifier.size(30.dp)) },
+                        icon = { if (screen.icon != null) Icon(screen.icon, contentDescription = screen.resourceId, tint = Color.Black, modifier = Modifier.size(30.dp)) },
                         modifier = Modifier
                             .background(Color.White)
                     )
@@ -68,30 +67,28 @@ fun MainScreen() {
         }
     ) { innerPadding ->
         // TODO startDestination 수정하기
-        NavHost(navController = navController, startDestination = Screen.Profile.route, Modifier.padding(innerPadding)) {
-            composable(Screen.Home.route) { HomeScreen() }
-            composable(Screen.Search.route) { SearchScreen(navController) }
-            composable(Screen.Add.route) { AddScreen() }
-            composable(Screen.Reels.route) { ReelsScreen() }
-            composable(Screen.Profile.route) { ProfileScreen() }
+        NavHost(
+            navController = navController,
+            startDestination = BottomNavi.ProfileScreen.route,
+            Modifier.padding(innerPadding),
+            enterTransition = { fadeIn(animationSpec = tween(0)) },
+            exitTransition = { fadeOut(animationSpec = tween(0)) }
+        ) {
+            composable(BottomNavi.HomeScreen.route) { HomeScreen() }
+            composable(BottomNavi.SearchScreen.route) { SearchScreen(navController) }
+            composable(BottomNavi.AddScreen.route) { AddScreen() }
+            composable(BottomNavi.ReelsScreen.route) { ReelsScreen() }
+            composable(BottomNavi.ProfileScreen.route) { ProfileScreen() }
 
-            composable("searchDetail") { SearchDetailScreen(navController) }
+            composable(BottomNavi.SearchDetail.route) { SearchDetailScreen(navController) }
         }
     }
 }
 
-sealed class Screen(val route: String, @StringRes val resourceId: Int, val icon: ImageVector) {
-    object Home : Screen("home", R.string.home, Icons.Filled.Home)
-    object Search : Screen("search", R.string.search, Icons.Filled.Search)
-    object Add : Screen("add", R.string.add, Icons.Outlined.AddBox)
-    object Reels : Screen("reels", R.string.reels, Icons.Filled.Movie)
-    object Profile : Screen("profile", R.string.profile, Icons.Filled.Settings)
-}
-
 private val fragments = listOf(
-    Screen.Home,
-    Screen.Search,
-    Screen.Add,
-    Screen.Reels,
-    Screen.Profile,
+    BottomNavi.HomeScreen,
+    BottomNavi.SearchScreen,
+    BottomNavi.AddScreen,
+    BottomNavi.ReelsScreen,
+    BottomNavi.ProfileScreen,
 )

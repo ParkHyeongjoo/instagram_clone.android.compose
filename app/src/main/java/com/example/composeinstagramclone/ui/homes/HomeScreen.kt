@@ -1,4 +1,4 @@
-package com.example.composeinstagramclone.screen
+package com.example.composeinstagramclone.ui.homes
 
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
@@ -35,8 +35,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.composeinstagramclone.R
-import com.example.composeinstagramclone.data.model.Book
-import com.example.composeinstagramclone.data.model.DEFAULT_BOOKS
+import com.example.composeinstagramclone.model.Book
+import com.example.composeinstagramclone.model.DEFAULT_BOOKS
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

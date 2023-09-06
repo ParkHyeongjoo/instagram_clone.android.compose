@@ -1,4 +1,4 @@
-package com.example.composeinstagramclone.screen
+package com.example.composeinstagramclone.ui.searches
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

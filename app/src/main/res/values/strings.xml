@@ -6,4 +6,10 @@
     <string name="add">Add</string>
     <string name="reels">Reels</string>
     <string name="profile">Profile</string>
+
+    <string name="searchDetail">SearchDetail</string>
+
+    <string name="allTab">AllTab</string>
+    <string name="reelsTab">ReelsTab</string>
+    <string name="tagTab">TagTab</string>
 </resources>
