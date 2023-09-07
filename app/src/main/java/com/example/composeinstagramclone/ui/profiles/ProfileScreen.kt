@@ -43,47 +43,11 @@ fun ProfileScreen() {
                     containerColor = Color.White
                 ),
                 navigationIcon = {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .wrapContentSize()
-                                .padding(start = 10.dp, end = 8.dp)
-                                .clickable { /*TODO*/ }
-                        ) {
-                            Text(
-                                text = "j_park_bro",
-                                fontSize = 18.sp,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
-                        Box(
-                            modifier = Modifier
-                                .wrapContentSize()
-                                .clickable { /*TODO*/ }
-                        ) {
-                            Icon(
-                                Icons.Outlined.ExpandMore,
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .size(28.dp)
-                            )
-                        }
-                    }
+                    navigationIcon()
                 },
                 title = {},
                 actions = {
-                    IconButton(
-                        onClick = { /*TODO*/ }
-                    ) {
-                        Icon(Icons.Outlined.AddBox, contentDescription = null, modifier = Modifier.size(30.dp))
-                    }
-                    IconButton(
-                        onClick = { /*TODO*/ }
-                    ) {
-                        Icon(Icons.Outlined.Menu, contentDescription = null, modifier = Modifier.size(30.dp))
-                    }
+                    actions()
                 }
             )
         }
@@ -93,6 +57,52 @@ fun ProfileScreen() {
             pagerState = pagerState,
             coroutineScope = coroutineScope
         )
+    }
+}
+
+@Composable
+private fun navigationIcon() {
+    Row(
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(
+            modifier = Modifier
+                .wrapContentSize()
+                .padding(start = 10.dp, end = 8.dp)
+                .clickable { /*TODO*/ }
+        ) {
+            Text(
+                text = "j_park_bro",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }
+        Box(
+            modifier = Modifier
+                .wrapContentSize()
+                .clickable { /*TODO*/ }
+        ) {
+            Icon(
+                Icons.Outlined.ExpandMore,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(28.dp)
+            )
+        }
+    }
+}
+
+@Composable
+private fun actions() {
+    IconButton(
+        onClick = { /*TODO*/ }
+    ) {
+        Icon(Icons.Outlined.AddBox, contentDescription = null, modifier = Modifier.size(30.dp))
+    }
+    IconButton(
+        onClick = { /*TODO*/ }
+    ) {
+        Icon(Icons.Outlined.Menu, contentDescription = null, modifier = Modifier.size(30.dp))
     }
 }
 
@@ -118,12 +128,20 @@ private fun Content(
         ) {
             item { ProfileState() }
             stickyHeader { StickyTab(pagerState = pagerState, coroutineScope = coroutineScope) }
-            items(rowsCount) { rowIndex ->
-                val rangeStart = rowIndex * columnSize
-                var rangeEnd = rangeStart + columnSize - 1
-                if (rangeEnd > list.lastIndex) rangeEnd = list.lastIndex
+//            items(rowsCount) { rowIndex ->
+//                val rangeStart = rowIndex * columnSize
+//                var rangeEnd = rangeStart + columnSize - 1
+//                if (rangeEnd > list.lastIndex) rangeEnd = list.lastIndex
+//                PagerView(
+//                    rowList = list.slice(rangeStart..rangeEnd),
+//                    columnWidth = maxWidth / columnSize,
+//                    pages = fragments,
+//                    pagerState = pagerState
+//                )
+//            }
+            item {
                 PagerView(
-                    rowList = list.slice(rangeStart..rangeEnd),
+                    rowList = list.slice(0..2),
                     columnWidth = maxWidth / columnSize,
                     pages = fragments,
                     pagerState = pagerState
@@ -138,7 +156,7 @@ private fun ProfileState() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(300.dp)
+            .height(200.dp)
             .background(Color.Blue)
     )
 }
@@ -175,7 +193,7 @@ private fun StickyTab(
                 selected = pagerState.currentPage == index,
                 onClick = {
                     coroutineScope.launch {
-                        pagerState.scrollToPage(index)
+                        pagerState.animateScrollToPage(index)
                     }
                 }
             ) {

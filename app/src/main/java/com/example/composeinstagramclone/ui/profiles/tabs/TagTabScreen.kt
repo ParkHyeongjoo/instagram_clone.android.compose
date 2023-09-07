@@ -13,14 +13,14 @@ import androidx.compose.ui.unit.Dp
 
 @Composable
 fun TagTabScreen(
-    rowList: List<String>,
+//    rowList: List<String>,
     columnWidth: Dp,
 ) {
     LazyRow {
-        items(rowList.size) { index ->
-            val item = rowList[index]
+        items(100) { index ->
+//            val item = rowList[index]
             Text(
-                text = item.toString(),
+                text = index.toString(),
                 modifier = Modifier
                     .width(columnWidth)
                     .aspectRatio(1f) // 정사각형 grid item을 위한 ratio 지정
